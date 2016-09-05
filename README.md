@@ -38,7 +38,7 @@ module.exports = {
     publicPath: '/',
     port: 8091,  // 开发服务器端口
     mock: {
-      contentBase: './mock', // mock 数据目录
+      contentBase: './mock', // mock数据目录
       port: 8092 // mock服务器端口
     }
   }
