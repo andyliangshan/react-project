@@ -33,7 +33,7 @@ let initialState = {};
  */
 let store = createStore(rootReducer, initialState, compose(
   applyMiddleware(thunkMiddleware, routerMiddleware(browserHistory)),
-  window.devToolsExtension ? window.devToolsExtension() : (fn) => fn
+  window.devToolsExtension ? window.devToolsExtension() : fn => fn
 ));
 
 /**

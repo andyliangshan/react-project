@@ -7,17 +7,15 @@ function receiveUserInfo(data) {
   return {
     type: USER_INFO,
     user: data
-  }
+  };
 }
 
 export function userInfo(uid) {
-  return async (dispatch) => {
-    try {
-      let result = await fetch(`/api/user/${uid}`);
-      let info = await result.json();
-      dispatch(receiveUserInfo(info.data));
-    } catch (err) {
-
-    }
-  }
+  return (dispatch) => {
+    fetch(`/api/user/${uid}`)
+      .then(result => result.json())
+      .then((info) => {
+        dispatch(receiveUserInfo(info.data));
+      });
+  };
 }
