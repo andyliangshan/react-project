@@ -5,11 +5,12 @@ const ERROR = 2;
 
 module.exports = {
   parserOptions: {
-    ecmaVersion: 6,
+    ecmaVersion: 7,
     sourceType: 'module',
+    allowImportExportEverywhere: false,
     ecmaFeatures: {
-      experimentalObjectRestSpread: true,
-      jsx: true
+      jsx: true,
+      experimentalObjectRestSpread: true
     }
   },
   plugins: [
@@ -165,7 +166,7 @@ module.exports = {
     'unicode-bom': ERROR,
 
     'arrow-body-style': ERROR,
-    'arrow-parens': ERROR,
+    'arrow-parens': [ERROR, 'as-needed', {requireForBlockBody: true}],
     'arrow-spacing': ERROR,
     'constructor-super': ERROR,
     'generator-star-spacing': ERROR,
