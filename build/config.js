@@ -9,7 +9,7 @@ module.exports = {
     publicPath: '/assets/'
   },
   dev: {
-    env: 'production',
+    env: 'development',
     publicPath: '/',
     port: 8091,
     mock: {

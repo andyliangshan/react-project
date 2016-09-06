@@ -34,7 +34,7 @@ module.exports = {
     publicPath: '/assets/' // 生产环境访问静态资源路径前缀
   },
   dev: {
-    env: 'production',
+    env: 'development',
     publicPath: '/',
     port: 8091,  // 开发服务器端口
     mock: {
