@@ -1,8 +1,5 @@
 'use strict';
 
-// 强制设置环境变量NODE_ENV为生产环境
-process.env.NODE_ENV = 'production';
-
 const path = require('path');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
@@ -11,6 +8,10 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const config = require('./config');
 const webpackBaseConfig = require('./webpack.base.config');
+
+if (!process.env.NODE_ENV) {
+  process.env.NODE_ENV = config.prod.env;
+}
 
 /**
  * imagemin config

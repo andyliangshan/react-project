@@ -1,8 +1,5 @@
 'use strict';
 
-// 强制设置环境变量NODE_ENV为开发环境
-process.env.NODE_ENV = 'development';
-
 const path = require('path');
 const WebpackDevServer = require("webpack-dev-server");
 const merge = require('webpack-merge');
@@ -15,6 +12,10 @@ const webpackBaseConfig = require('./webpack.base.config');
 
 const port = process.env.PORT || config.dev.port;
 const mockPort = process.env.MOCK_PORT || config.dev.mock.port;
+
+if (!process.env.NODE_ENV) {
+  process.env.NODE_ENV = config.dev.env;
+}
 
 const compiler = webpack(merge.smart(webpackBaseConfig, {
   entry: {
