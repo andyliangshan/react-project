@@ -14,9 +14,12 @@ import {Router, browserHistory} from 'react-router';
 import {createStore, applyMiddleware, compose} from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import {syncHistoryWithStore, routerMiddleware} from 'react-router-redux';
+import NProgress from 'nprogress';
 
 import routes from './routes';
 import rootReducer from './reducers';
+
+import 'nprogress/nprogress.css';
 
 /**
  * initial state tree
@@ -44,9 +47,44 @@ let store = createStore(rootReducer, initialState, compose(
  */
 const history = syncHistoryWithStore(browserHistory, store);
 
+/**
+ * create routes
+ * @param  {Array} routeList
+ * @return {Array}
+ */
+function processRoutes(routeList) {
+  let newRoutes = [];
+
+  for (let i = 0, route; route = routeList[i++];) {
+    let newRoute = {...route};
+
+    newRoute.onEnter = function(...args) {
+      if (typeof route.onEnter === 'function') {
+        route.onEnter.apply(this, args);
+      }
+      NProgress.start();
+    };
+
+    if (Array.isArray(route.childRoutes)) {
+      newRoute.childRoutes = processRoutes(route.childRoutes);
+    }
+
+    newRoutes.push(newRoute);
+  }
+
+  return newRoutes;
+}
+
+function createElement(Component, props) {
+  NProgress.done();
+  return (
+    <Component {...props} />
+  );
+}
+
 ReactDOM.render(
   <Provider store={store}>
-    <Router routes={routes} history={history} />
+    <Router routes={processRoutes(routes)} history={history} createElement={createElement} />
   </Provider>,
   document.getElementById('app')
 );

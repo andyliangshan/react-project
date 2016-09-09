@@ -13,6 +13,15 @@ const inputBase = config.inputBase;
 const outputBase = config.outputBase;
 
 let filename = `[name]${debug ? '' : '-[hash:10]'}.[ext]`;
+let chunkhash = debug ? '' : '-[chunkhash:10]';
+
+let extractCSS = new ExtractTextPlugin(`style${chunkhash}.css`, {
+  allChunks: !debug
+});
+
+let extractVendorCSS = new ExtractTextPlugin(`vendor${chunkhash}.css`, {
+  allChunks: !debug
+});
 
 module.exports = {
   entry: {
@@ -27,6 +36,7 @@ module.exports = {
       'react-redux',
       'redux',
       'redux-thunk',
+      'nprogress'
     ]
   },
   output: {
@@ -44,8 +54,17 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract('style', [
-          `css?modules${!debug ? '&minimize' : ''}`,
+        exclude: /node_modules/,
+        loader: extractCSS.extract('style', [
+          `css?modules&camelCase${!debug ? '&minimize' : '&sourceMap'}`,
+          'postcss'
+        ])
+      },
+      {
+        test: /\.css$/,
+        include: /node_modules/,
+        loader: extractVendorCSS.extract('style', [
+          `css?${!debug ? 'minimize' : 'sourceMap'}`,
           'postcss'
         ])
       },
@@ -93,8 +112,7 @@ module.exports = {
       names: ['vendor', 'manifest'],
       minChunks: Infinity
     }),
-    new ExtractTextPlugin(`style${debug ? '' : '-[chunkhash:10]'}.css`, {
-      allChunks: !debug
-    })
+    extractCSS,
+    extractVendorCSS
   ]
 }

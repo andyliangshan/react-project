@@ -6,10 +6,17 @@ export default [
   {
     path: '/',
     component: App,
-    indexRoute: {
-      component: Home
-    },
     childRoutes: [
+      {
+        path: '',
+        getIndexRoute(nextState, cb) {
+          require.ensure([], (require) => {
+            cb(null, {
+              component: require('containers/Home').default
+            });
+          });
+        }
+      },
       {
         path: 'profile',
         getIndexRoute(nextState, cb) {
