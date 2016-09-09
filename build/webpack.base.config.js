@@ -12,6 +12,8 @@ const debug = process.env.NODE_ENV !== 'production';
 const inputBase = config.inputBase;
 const outputBase = config.outputBase;
 
+let filename = `[name]${debug ? '' : '-[hash:10]'}.[ext]`;
+
 module.exports = {
   entry: {
     main: [path.resolve(inputBase, 'main.js')],
@@ -29,9 +31,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(outputBase),
-    publicPath: debug ? config.dev.publicPath : config.prod.publicPath,
-    filename: '[name]-[hash:10].js',
-    chunkFilename: 'chunk.[id]-[chunkhash:10].js'
+    publicPath: debug ? config.dev.publicPath : config.prod.publicPath
   },
   recordsPath: path.resolve('.webpack-records.json'),
   module: {
@@ -45,18 +45,18 @@ module.exports = {
       {
         test: /\.css$/,
         loader: ExtractTextPlugin.extract('style', [
-          `css?modules${process.env.NODE_ENV === 'production' ? '&minimize' : ''}`,
+          `css?modules${!debug ? '&minimize' : ''}`,
           'postcss'
         ])
       },
       {
         test: /\.(?:woff2?|eot|ttf)$/,
-        loader: 'file?name=[name]-[hash:10].[ext]'
+        loader: `file?name=${filename}`
       },
       {
         test: /\.(?:png|jpe?g|gif|svg)$/,
-        loader: 'url?limit=10000&name=[name]-[hash:10].[ext]'
-      },
+        loader: `url?limit=10000&name=${filename}`
+      }
     ]
   },
   postcss: function() {
@@ -93,7 +93,7 @@ module.exports = {
       names: ['vendor', 'manifest'],
       minChunks: Infinity
     }),
-    new ExtractTextPlugin(`style-[chunkhash:10].css`, {
+    new ExtractTextPlugin(`style${debug ? '' : '-[chunkhash:10]'}.css`, {
       allChunks: !debug
     })
   ]

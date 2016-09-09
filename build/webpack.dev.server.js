@@ -24,6 +24,10 @@ const compiler = webpack(merge.smart(webpackBaseConfig, {
       'webpack/hot/only-dev-server'
     ]
   },
+  output: {
+    filename: '[name].js',
+    chunkFilename: 'chunk.[id].js'
+  },
   cache: true,
   debug: true,
   devtool: 'cheap-module-inline-source-map',

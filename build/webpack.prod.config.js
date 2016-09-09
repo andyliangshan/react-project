@@ -28,6 +28,10 @@ const imageWebpack = {
 }
 
 module.exports = merge.smart(webpackBaseConfig, {
+  output: {
+    filename: '[name]-[hash:10].js',
+    chunkFilename: 'chunk.[id]-[chunkhash:10].js'
+  },
   module: {
     loaders: [
       {
