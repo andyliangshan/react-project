@@ -15,6 +15,12 @@ module.exports = {
     mock: {
       contentBase: './mock',
       port: 8092
+    },
+    proxy: {
+      '/api/*': {
+        target: `http://localhost:8092/`,
+        secure: false
+      }
     }
   }
 }

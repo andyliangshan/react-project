@@ -63,12 +63,7 @@ const server = new WebpackDevServer(compiler, {
     chunks: false,
     children: false
   },
-  proxy: {
-    '/api/*': {
-      target: `http://localhost:${mockPort}/`,
-      secure: false
-    }
-  }
+  proxy: config.dev.proxy || {}
 });
 
 server.listen(port, '0.0.0.0', function(err) {
