@@ -48,6 +48,28 @@ let store = createStore(rootReducer, initialState, compose(
 const history = syncHistoryWithStore(browserHistory, store);
 
 /**
+ * use nprogress
+ * @param {Object} route
+ */
+function useNProgress(route) {
+  let enter = route.onEnter;
+
+  route.onEnter = function(...args) {
+    enter && enter.apply(this, args);
+    NProgress.start();
+  };
+
+  if (route.indexRoute && route.indexRoute.component) {
+    let indexRouteEnter = route.indexRoute.onEnter;
+    
+    route.indexRoute.onEnter = function(...args) {
+      indexRouteEnter && indexRouteEnter.apply(this, args);
+      NProgress.start();
+    };
+  }
+}
+
+/**
  * create routes
  * @param  {Array} routeList
  * @return {Array}
@@ -58,12 +80,7 @@ function processRoutes(routeList) {
   for (let i = 0, route; route = routeList[i++];) {
     let newRoute = {...route};
 
-    newRoute.onEnter = function(...args) {
-      if (typeof route.onEnter === 'function') {
-        route.onEnter.apply(this, args);
-      }
-      NProgress.start();
-    };
+    useNProgress(newRoute);
 
     if (Array.isArray(route.childRoutes)) {
       newRoute.childRoutes = processRoutes(route.childRoutes);
