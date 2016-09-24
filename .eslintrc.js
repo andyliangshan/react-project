@@ -5,9 +5,8 @@ const ERROR = 2;
 
 module.exports = {
   parserOptions: {
-    ecmaVersion: 7,
+    ecmaVersion: 8,
     sourceType: 'module',
-    allowImportExportEverywhere: false,
     ecmaFeatures: {
       jsx: true,
       experimentalObjectRestSpread: true
