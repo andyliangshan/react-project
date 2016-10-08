@@ -1,7 +1,7 @@
 
-'use strict';
-
 /* eslint no-console: 0 */
+
+'use strict';
 
 const path = require('path');
 const webpack = require('webpack');
