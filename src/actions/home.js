@@ -1,21 +1,25 @@
 
-import {
-  USER_INFO
-} from 'constants/home';
+export const USER_REQUEST = 'home/USER_REQUEST';
+export const USER_SUCCESS = 'home/USER_SUCCESS';
+export const USER_FAILURE = 'home/USER_FAILURE';
 
-function receiveUserInfo(data) {
-  return {
-    type: USER_INFO,
-    user: data
-  };
-}
-
-export function userInfo(uid) {
+export function fetchUser(uid) {
   return (dispatch) => {
+    dispatch({type: USER_REQUEST});
+
     fetch(`/api/user/${uid}`)
-      .then(result => result.json())
-      .then((info) => {
-        dispatch(receiveUserInfo(info.data));
+    .then(response => response.json())
+    .then((info) => {
+      dispatch({
+        type: USER_SUCCESS,
+        user: info.data
+      })
+    })
+    .catch((err) => {
+      dispatch({
+        type: USER_FAILURE,
+        error: err.message
       });
-  };
+    });
+  }
 }

@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import Card from 'components/Card';
 
 import {
-  userInfo
+  fetchUser
 } from 'actions/home';
 
 class Profile extends React.Component {
@@ -14,7 +14,7 @@ class Profile extends React.Component {
   componentDidMount() {
     let {actions} = this.props;
 
-    actions.userInfo('190886981');
+    actions.fetchUser('190886981');
   }
 
   dateNow() {
@@ -61,7 +61,7 @@ function select(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
-      userInfo
+      fetchUser
     }, dispatch)
   }
 }

@@ -1,12 +1,10 @@
 
 import createReducer from 'common/createReducer';
 
-import {
-  USER_INFO
-} from 'constants/home';
+import * as ActionTypes from 'actions/home';
 
 export default createReducer({
-  [USER_INFO]: (state, {user}) => ({
+  [ActionTypes.USER_SUCCESS]: (state, {user}) => ({
     ...state,
     user
   })
