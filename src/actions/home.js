@@ -11,9 +11,11 @@ function receiveUserInfo(data) {
 }
 
 export function userInfo(uid) {
-  return async (dispatch) => {
-    let info = await fetch(`/api/user/${uid}`).then(result => result.json());
-
-    dispatch(receiveUserInfo(info.data));
+  return (dispatch) => {
+    fetch(`/api/user/${uid}`)
+      .then(result => result.json())
+      .then((info) => {
+        dispatch(receiveUserInfo(info.data));
+      });
   };
 }
