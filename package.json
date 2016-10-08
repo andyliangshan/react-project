@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/evan2x/react-redux-boilerplate#readme",
   "devDependencies": {
+    "babel-core": "^6.17.0",
     "babel-loader": "^6.2.5",
     "babel-plugin-transform-runtime": "^6.15.0",
     "babel-preset-latest": "^6.16.0",
