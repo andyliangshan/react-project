@@ -12,10 +12,11 @@ const config = require('./config').dev.mock;
 const port = config.port;
 
 const routeModules = requireDir(path.resolve(config.contentBase), {recurse: true});
+
 for (let moduleName in routeModules) {
   if (
-    routeModules.hasOwnProperty(moduleName)
-    && typeof routeModules[moduleName] === 'function'
+    routeModules.hasOwnProperty(moduleName) &&
+    typeof routeModules[moduleName] === 'function'
   ) {
     routeModules[moduleName](router);
   }
@@ -23,7 +24,7 @@ for (let moduleName in routeModules) {
 
 app.use(router);
 
-app.listen(port, '0.0.0.0', function(err) {
+app.listen(port, '0.0.0.0', (err) => {
 
   if (err) {
     console.error(chalk.red(err));

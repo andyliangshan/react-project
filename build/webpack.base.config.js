@@ -78,7 +78,7 @@ module.exports = {
       }
     ]
   },
-  postcss: function() {
+  postcss() {
     return [
       cssnext({
         features: {

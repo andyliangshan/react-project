@@ -1,9 +1,12 @@
+
 'use strict';
 
+/* eslint no-console: 0 */
+
 const path = require('path');
-const WebpackDevServer = require("webpack-dev-server");
+const webpack = require('webpack');
+const WebpackDevServer = require('webpack-dev-server');
 const merge = require('webpack-merge');
-const webpack = require("webpack");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const chalk = require('chalk');
 
@@ -11,7 +14,6 @@ const config = require('./config');
 const webpackBaseConfig = require('./webpack.base.config');
 
 const port = process.env.PORT || config.dev.port;
-const mockPort = process.env.MOCK_PORT || config.dev.mock.port;
 
 if (!process.env.NODE_ENV) {
   process.env.NODE_ENV = config.dev.env;
@@ -66,7 +68,7 @@ const server = new WebpackDevServer(compiler, {
   proxy: config.dev.proxy || {}
 });
 
-server.listen(port, '0.0.0.0', function(err) {
+server.listen(port, '0.0.0.0', (err) => {
   if (err) {
     console.error(chalk.red(err));
     return;

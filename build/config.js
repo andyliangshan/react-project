@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = {
+const config = {
   title: '管理系统',
   inputBase: './src',
   outputBase: './dist',
@@ -15,12 +15,17 @@ module.exports = {
     mock: {
       contentBase: './mock',
       port: 8092
-    },
-    proxy: {
-      '/api/*': {
-        target: `http://localhost:8092/`,
-        secure: false
-      }
     }
   }
-}
+};
+
+// 开发环境代理配置
+config.dev.proxy = {
+  '/api/*': {
+    // 代理到mock server
+    target: `http://localhost:${config.dev.mock.port}/`,
+    secure: false
+  }
+};
+
+module.exports = config;
