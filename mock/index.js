@@ -13,4 +13,11 @@ module.exports = function(router) {
       }
     });
   });
+
+  router.get('/api/date', (req, res) => {
+    res.json({
+      status: 0,
+      data: new Date()
+    });
+  });
 }

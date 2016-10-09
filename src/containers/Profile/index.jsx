@@ -6,8 +6,9 @@ import {connect} from 'react-redux';
 import Card from 'components/card';
 
 import {
-  fetchUser
-} from 'actions/home';
+  fetchUser,
+  fetchNowDate
+} from 'actions';
 
 class Profile extends React.Component {
 
@@ -15,10 +16,13 @@ class Profile extends React.Component {
     let {actions} = this.props;
 
     actions.fetchUser('190886981');
+    actions.fetchNowDate();
   }
 
   dateNow() {
     let date = this.props.date;
+
+    if (!(date instanceof Date)) return '';
 
     let year = date.getFullYear(),
       month = ('0' + (date.getMonth() + 1)).slice(-2),
@@ -46,7 +50,7 @@ class Profile extends React.Component {
 }
 
 function select(state) {
-  let {user, date} = state.home;
+  let {user, date} = state;
 
   return {
     username: user.name,
@@ -54,14 +58,15 @@ function select(state) {
     email: user.email,
     github: user.github,
     avatar: user.avatar,
-    date: date
+    date
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
-      fetchUser
+      fetchUser,
+      fetchNowDate
     }, dispatch)
   }
 }
