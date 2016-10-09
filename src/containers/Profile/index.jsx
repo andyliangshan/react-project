@@ -3,7 +3,7 @@ import React from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import Card from 'components/Card';
+import Card from 'components/card';
 
 import {
   fetchUser
