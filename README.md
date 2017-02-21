@@ -25,31 +25,30 @@ $ open build/config.js
 ### config.js
 
 ```js
-const config = {
-  title: '管理系统',
-  inputBase: './src', // 源代码目录
-  outputBase: './dist', // 构建输出目录
-  prod: {
-    env: 'production',
-    publicPath: '/assets/' // 生产环境访问静态资源路径前缀
-  },
-  dev: {
-    env: 'development',
-    publicPath: '/',
-    port: 8091, // 开发服务器端口
-    mock: {
-      contentBase: './mock', // mock数据目录
-      port: 8092 // mock服务器端口
-    }
-  }
-};
+'use strict';
 
-// 开发环境代理配置
-config.dev.proxy = {
+const config = {
+  title: 'React boilerplate',
+  output: './dist', // 构建输出目录
+  port: 8091,
+  mock: {
+    contentBase: './mock', // mock数据目录
+    port: 8092 // mock服务器端口
+  }
+}
+
+config.proxy = {
+  // 以/api开头的请求代理到数据模拟服务
   '/api/*': {
-    // 代理到mock server
-    target: `http://localhost:${config.dev.mock.port}/`,
+    target: `http://localhost:${config.mock.port}/`,
     secure: false
+  },
+  '/github/api/*': {
+    target: 'https://api.github.com',
+    changeOrigin: true,
+    pathRewrite: {
+      '^/github/api': ''
+    }
   }
 };
 
