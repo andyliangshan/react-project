@@ -12,20 +12,19 @@ const router = express.Router();
 
 const config = require('./config').mock;
 const port = config.port;
+const core_toString = Object.prototype.toString;
 
-const routeModules = requireDir(path.resolve(config.contentBase), {recurse: true});
-
-(function resolveRouteModules(routes, directory = config.contentBase) {
-  for (let name in routes) {
-    if (routes.hasOwnProperty(name)) {
-      let route = routes[name];
+(function resolveRouteModules(routeModules, directory) {
+  for (let name in routeModules) {
+    if (routeModules.hasOwnProperty(name)) {
+      let route = routeModules[name];
 
       if (
-        Object.prototype.toString.call(route) === '[object Object]'
+        core_toString.call(route) === '[object Object]'
         && Object.keys(route).length > 0
       ) {
         resolveRouteModules(route, path.join(directory, name));
-      } else if (typeof route === 'function') {
+      } else if (core_toString.call(route) === '[object Function]') {
         route(router);
       } else {
         console.error(
@@ -36,7 +35,7 @@ const routeModules = requireDir(path.resolve(config.contentBase), {recurse: true
       }
     }
   }
-}(routeModules));
+}(requireDir(path.resolve(config.contentBase), {recurse: true}), config.contentBase));
 
 app.use(router);
 
