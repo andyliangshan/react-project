@@ -10,6 +10,10 @@ const config = {
   }
 }
 
+/**
+ * http proxy options
+ * @see https://github.com/chimurai/http-proxy-middleware#options
+ */
 config.proxy = {
   // 以/api开头的请求代理到数据模拟服务
   '/api/*': {
