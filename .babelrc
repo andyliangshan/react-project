@@ -1,6 +1,12 @@
 {
   "presets": [
-    "latest",
+    [
+      "latest", {
+        "es2015": {
+          "modules": false
+        }
+      }
+    ],
     "stage-2",
     "react"
   ],
@@ -8,8 +14,9 @@
     [
       "transform-runtime", {
         "polyfill": false,
-        "regenerator": true
+        "regenerator": false
       }
-    ]
+    ],
+    "react-hot-loader/babel"
   ]
 }
