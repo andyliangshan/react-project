@@ -1,21 +1,16 @@
 /**
- * Create a redux reducer
- * @date 2016/07/12
- * @author aiweizhang <evan2zaw@gmail.com>
- *
- */
-
-/**
  * create a reducer
  * @param {Object} handlers
  * @param {Any} initialState
+ * @author aiweizhang <evan2zaw@gmail.com>
  * @return {Function}
  */
 export default function createReducer(handlers = {}, initialState = {}) {
-  return function(
-    state = initialState,
-    action = {}
-  ) {
+  return (state = initialState, action = {}) => {
+    if (Object.prototype.toString.call(action) !== '[object Object]') {
+      throw new Error('Expected action to be a plain object');
+    }
+
     if (action.type) {
       let handler = handlers[action.type];
 

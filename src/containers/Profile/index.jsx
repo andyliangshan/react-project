@@ -1,72 +1,52 @@
 
 import React from 'react';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
-import Card from 'components/card';
+import Card from 'components/Card';
 
 import {
-  fetchUser,
-  fetchNowDate
+  requestUser
 } from 'actions';
 
 class Profile extends React.Component {
 
   componentDidMount() {
-    let {actions} = this.props;
+    let { actions } = this.props;
 
-    actions.fetchUser('190886981');
-    actions.fetchNowDate();
-  }
-
-  dateNow() {
-    let date = this.props.date;
-
-    if (!(date instanceof Date)) return '';
-
-    let year = date.getFullYear(),
-      month = ('0' + (date.getMonth() + 1)).slice(-2),
-      day = ('0' + date.getDate()).slice(-2);
-
-    return `${year}-${month}-${day}`;
+    actions.requestUser('evan2x');
   }
 
   render() {
-    let {
-      username,
-      email,
-      github,
-      avatar
-    } = this.props;
-
     return (
       <section>
         <h1>Profile</h1>
-        <p>Date: {this.dateNow()}</p>
-        <Card name={username} email={email} avatar={avatar} github={github} />
+        <Card {...this.props} />
       </section>
     );
   }
 }
 
 function select(state) {
-  let {user, date} = state;
+  let { user } = state;
 
   return {
-    username: user.name,
+    name: user.name,
     uid: user.id,
     email: user.email,
     github: user.github,
     avatar: user.avatar,
-    date
+    createdAt: user.createdAt,
+    location: user.location,
+    isFetching: user.isFetching,
+    error: user.error
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
-      fetchUser,
-      fetchNowDate
+      requestUser
     }, dispatch)
   }
 }

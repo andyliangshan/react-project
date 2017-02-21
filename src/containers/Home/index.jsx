@@ -1,15 +1,43 @@
 
 import React from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
-export default class Home extends React.Component {
+import {
+  requestIntro
+} from 'actions';
+
+class Home extends React.Component {
+  componentDidMount() {
+    let { actions } = this.props;
+
+    actions.requestIntro();
+  }
+
   render() {
     return (
       <section>
         <h1>Home</h1>
         <article>
-          <p>This is home page.</p>
+          <p>{this.props.intro}</p>
         </article>
       </section>
     );
   }
 }
+
+function select(state) {
+  return {
+    intro: state.intro.content
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators({
+      requestIntro
+    }, dispatch)
+  }
+}
+
+export default connect(select, mapDispatchToProps)(Home);

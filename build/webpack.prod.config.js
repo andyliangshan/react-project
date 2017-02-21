@@ -1,58 +1,107 @@
 'use strict';
 
-const path = require('path');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const baseConfig = require('./webpack.base.config');
 const config = require('./config');
-const webpackBaseConfig = require('./webpack.base.config');
+const postcssLoader = require('./postcss-loader.config');
 
-if (!process.env.NODE_ENV) {
-  process.env.NODE_ENV = config.prod.env;
-}
+const extractCSS = new ExtractTextPlugin({
+  filename: 'css/[name]-[contenthash:10].css',
+  allChunks: true
+});
 
-/**
- * imagemin config
- * @type {Object}
- */
-const imageWebpack = {
-  progressive: true,
-  optimizationLevel: 7,
-  interlaced: false,
-  pngquant: {
-    quality: '65-90',
-    speed: 4
-  }
-};
+const extractVendorCSS = new ExtractTextPlugin({
+  filename: 'css/vendor-[contenthash:10].css',
+  allChunks: true
+});
 
-module.exports = merge.smart(webpackBaseConfig, {
+module.exports = merge.smart(baseConfig, {
   output: {
-    filename: '[name]-[hash:10].js',
+    filename: '[name]-[chunkhash:10].js',
     chunkFilename: 'chunk.[id]-[chunkhash:10].js'
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.(?:png|jpe?g|gif|svg)$/,
-        loaders: [`image-webpack?${JSON.stringify(imageWebpack)}`]
+        loaders: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'fonts/[name]-[hash:10].[ext]'
+            }
+          },
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              progressive: true,
+              optimizationLevel: 7,
+              interlaced: false,
+              pngquant: {
+                quality: '65-90',
+                speed: 4
+              }
+            }
+          }
+        ]
+      },
+      {
+        test: /\.(?:png|jpe?g|gif|svg)$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          name: 'img/[name]-[hash:10].[ext]'
+        }
+      },
+      {
+        test: /\.css$/,
+        exclude: /node_modules/,
+        use: extractCSS.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                modules: true,
+                minimize: true,
+                camelCase: true
+              }
+            },
+            postcssLoader
+          ]
+        })
+      },
+      {
+        test: /\.css$/,
+        include: /node_modules/,
+        use: extractVendorCSS.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                minimize: true
+              }
+            }
+          ]
+        })
       }
     ]
   },
   plugins: [
-    new webpack.optimize.OccurrenceOrderPlugin(true),
-    new webpack.optimize.UglifyJsPlugin({
-      minimize: true,
-      compress: {
-        warnings: false
-      }
+    new webpack.optimize.UglifyJsPlugin(),
+    new webpack.LoaderOptionsPlugin({
+      minimize: true
     }),
-    new webpack.optimize.DedupePlugin(),
+    extractCSS,
+    extractVendorCSS,
     new HtmlWebpackPlugin({
       inject: false,
       title: config.title,
-      template: path.join(config.inputBase, 'index.html'),
-      filename: 'index.html',
+      template: 'index.html',
       chunksSortMode: 'dependency',
       minify: {
         collapseWhitespace: true,

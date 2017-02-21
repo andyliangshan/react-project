@@ -10,9 +10,27 @@
   & > h2 {
     margin: 0;
   }
+}
 
-  & > p {
+.wait, .error {
+  text-align: center;
+  font-size: 12px;
+}
+
+.error {
+  color: #f00;
+}
+
+.info {
+
+  & > dt {
+    margin: 0 auto;
+  }
+
+  & > dd {
     margin: 15px auto 0;
+    text-align: left;
+    padding-left: 20px;
   }
 
   & a {

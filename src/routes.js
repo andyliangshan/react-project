@@ -1,21 +1,30 @@
-
-import App from 'containers/App';
+import Layout from 'containers/Layout';
 import Home from 'containers/Home';
 
-export default [
+const routes = [
   {
     path: '/',
-    component: App,
-    indexRoute: {component: Home},
+    component: Layout,
+    indexRoute: { component: Home },
     childRoutes: [
       {
         path: 'profile',
         getComponent(nextState, cb) {
-          require.ensure([], (require) => {
-            cb(null, require('containers/Profile').default);
+          import('containers/Profile').then(module => {
+            cb(null, module.default);
+          });
+        }
+      },
+      {
+        path: 'repositories',
+        getComponent(nextState, cb) {
+          import('containers/Repositories').then(module => {
+            cb(null, module.default);
           });
         }
       }
     ]
   }
 ];
+
+export default routes;
