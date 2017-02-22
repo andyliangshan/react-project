@@ -12,7 +12,7 @@ export default function createReducer(handlers = {}, initialState = {}) {
     }
 
     if (action.type) {
-      let handler = handlers[action.type];
+      const handler = handlers[action.type];
 
       return (handler ? handler(state, action) : state);
     }

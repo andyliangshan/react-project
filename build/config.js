@@ -8,7 +8,7 @@ const config = {
     contentBase: './mock',
     port: 8092
   }
-}
+};
 
 /**
  * http proxy options

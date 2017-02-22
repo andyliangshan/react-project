@@ -1,4 +1,4 @@
-import { fork, call, take, takeEvery, put } from 'redux-saga/effects';
+import { call, takeEvery, put } from 'redux-saga/effects';
 
 import {
   REQUEST_INTRO, successIntro, failureIntro,
@@ -9,7 +9,7 @@ import {
 function fetchIntroApi() {
   return fetch('/api/hello')
     .then(response => response.json())
-    .then(ret => {
+    .then((ret) => {
       if (ret.status) {
         throw new Error(ret.msg);
       } else {
@@ -21,7 +21,7 @@ function fetchIntroApi() {
 function fetchUserApi(name) {
   return fetch(`/github/api/users/${name}`)
     .then(response => response.json())
-    .then(repos => {
+    .then((repos) => {
       if (repos.message) {
         throw new Error(repos.message);
       } else {
@@ -33,7 +33,7 @@ function fetchUserApi(name) {
 function fetchReposApi(name) {
   return fetch(`/github/api/users/${name}/repos`)
     .then(response => response.json())
-    .then(repos => {
+    .then((repos) => {
       if (repos.message) {
         throw new Error(repos.message);
       } else {
@@ -44,7 +44,7 @@ function fetchReposApi(name) {
 
 function* fetchIntro() {
   try {
-    let intro = yield call(fetchIntroApi);
+    const intro = yield call(fetchIntroApi);
 
     yield put(successIntro(intro));
   } catch (err) {
@@ -54,7 +54,7 @@ function* fetchIntro() {
 
 function* fetchUser({ name }) {
   try {
-    let user = yield call(fetchUserApi, name);
+    const user = yield call(fetchUserApi, name);
 
     yield put(successUser({
       id: user.id,

@@ -10,7 +10,7 @@ const routes = [
       {
         path: 'profile',
         getComponent(nextState, cb) {
-          import('containers/Profile').then(module => {
+          import('containers/Profile').then((module) => {
             cb(null, module.default);
           });
         }
@@ -18,7 +18,7 @@ const routes = [
       {
         path: 'repositories',
         getComponent(nextState, cb) {
-          import('containers/Repositories').then(module => {
+          import('containers/Repositories').then((module) => {
             cb(null, module.default);
           });
         }

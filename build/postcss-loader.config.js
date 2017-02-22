@@ -5,7 +5,7 @@ const cssnext = require('postcss-cssnext');
 module.exports = {
   loader: 'postcss-loader',
   options: {
-    plugins: function() {
+    plugins() {
       return [
         cssnext({
           features: {
@@ -25,4 +25,4 @@ module.exports = {
       ];
     }
   }
-}
+};

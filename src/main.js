@@ -9,9 +9,8 @@ import createSagaMiddleware from 'redux-saga';
 import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux';
 import { AppContainer } from 'react-hot-loader';
 
-import rootReducer from './reducers';
-import rootSaga from './sagas';
-
+import rootReducer from 'reducers';
+import rootSaga from 'sagas';
 import App from 'containers/App';
 
 const sagaMiddleware = createSagaMiddleware();
@@ -44,7 +43,7 @@ const history = syncHistoryWithStore(browserHistory, store);
 const render = (Component) => {
   ReactDOM.render(
     <AppContainer>
-      <Component history={browserHistory} store={store} />
+      <Component history={history} store={store} />
     </AppContainer>,
     document.getElementById('app')
   );

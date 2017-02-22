@@ -10,7 +10,7 @@ import {
 } from 'actions';
 
 const introReducer = createReducer({
-  [REQUEST_INTRO]: (state) => ({
+  [REQUEST_INTRO]: state => ({
     ...state,
     isFetching: true
   }),
