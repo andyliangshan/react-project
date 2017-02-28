@@ -8,8 +8,12 @@ module.exports = {
   plugins: [
     'react'
   ],
-  extends: ['eslint-config-airbnb'],
+  extends: 'airbnb',
   rules: {
+    'no-continue': OFF,
+    'consistent-return': OFF,
+    'no-cond-assign': OFF,
+    'no-plusplus': OFF,
     'quote-props': OFF,
     'prefer-const': OFF,
     'func-names': OFF,
