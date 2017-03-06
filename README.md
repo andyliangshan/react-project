@@ -1,5 +1,7 @@
 # React Redux Boilerplate
 
+The boilerplate based on [react](https://facebook.github.io/react), [redux](https://github.com/reactjs/redux), [react router](https://github.com/ReactTraining/react-router), [redux saga](https://github.com/redux-saga/redux-saga), [webpack](https://webpack.js.org/), [nprogress](http://ricostacruz.com/nprogress/), [fetch API](https://fetch.spec.whatwg.org) for rapid project development
+
 ## Getting Started
 
 ```shell
