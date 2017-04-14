@@ -17,6 +17,7 @@ module.exports = {
       'react-redux',
       'redux',
       'redux-saga',
+      'redux-actions',
       'nprogress'
     ]
   },
