@@ -1,5 +1,6 @@
 .DS_Store
 npm-debug.log
+yarn-error.log
 .webpack-records.json
 node_modules/
 dist/
