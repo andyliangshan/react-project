@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import {
   requestIntro
-} from 'actions';
+} from 'modules/home/actions';
 
 class Home extends React.Component {
   componentDidMount() {
@@ -28,7 +28,7 @@ class Home extends React.Component {
 
 function select(state) {
   return {
-    intro: state.intro.content
+    intro: state.home.content
   }
 }
 

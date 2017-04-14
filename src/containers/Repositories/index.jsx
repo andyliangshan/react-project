@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import {
   requestRepos
-} from 'actions';
+} from 'modules/repositories/actions';
 
 import styles from './style.css';
 

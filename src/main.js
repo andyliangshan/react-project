@@ -6,8 +6,8 @@ import createSagaMiddleware from 'redux-saga';
 import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux';
 import { AppContainer } from 'react-hot-loader';
 
-import rootReducer from 'reducers';
-import rootSaga from 'sagas';
+import rootReducer from 'modules/reducers';
+import rootSaga from 'modules/sagas';
 import App from 'containers/App';
 
 const sagaMiddleware = createSagaMiddleware();

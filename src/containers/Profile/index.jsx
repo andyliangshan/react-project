@@ -7,7 +7,7 @@ import Card from 'components/Card';
 
 import {
   requestUser
-} from 'actions';
+} from 'modules/profile/actions';
 
 class Profile extends React.Component {
 
@@ -28,18 +28,18 @@ class Profile extends React.Component {
 }
 
 function select(state) {
-  let { user } = state;
+  let profile = state.profile;
 
   return {
-    name: user.name,
-    uid: user.id,
-    email: user.email,
-    github: user.github,
-    avatar: user.avatar,
-    createdAt: user.createdAt,
-    location: user.location,
-    isFetching: user.isFetching,
-    error: user.error
+    name: profile.name,
+    uid: profile.id,
+    email: profile.email,
+    github: profile.github,
+    avatar: profile.avatar,
+    createdAt: profile.createdAt,
+    location: profile.location,
+    isFetching: profile.isFetching,
+    error: profile.error
   }
 }
 
