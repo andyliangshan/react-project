@@ -27,30 +27,14 @@ module.exports = merge.smart(baseConfig, {
     rules: [
       {
         test: /\.(?:woff2?|eot|ttf|svg)$/,
-        loaders: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: 'fonts/[name]-[hash:10].[ext]'
-            }
-          },
-          {
-            loader: 'image-webpack-loader',
-            options: {
-              progressive: true,
-              optimizationLevel: 7,
-              interlaced: false,
-              pngquant: {
-                quality: '65-90',
-                speed: 4
-              }
-            }
-          }
-        ]
+        loader: 'file-loader',
+        options: {
+          name: 'fonts/[name]-[hash:10].[ext]'
+        }
       },
       {
         test: /\.(?:png|jpe?g|gif)$/,
-        loaders: [
+        use: [
           {
             loader: 'url-loader',
             options: {
