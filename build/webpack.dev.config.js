@@ -13,7 +13,7 @@ module.exports = merge.smartStrategy({
   entry: {
     main: [
       'react-hot-loader/patch',
-      'webpack-dev-server/client?http://localhost:8080',
+      'webpack-dev-server/client?http://127.0.0.1:8080',
       'webpack/hot/only-dev-server'
     ]
   },

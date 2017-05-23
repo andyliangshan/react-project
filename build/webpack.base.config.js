@@ -9,7 +9,7 @@ module.exports = {
     main: ['./main.js'],
     vendor: [
       'babel-polyfill',
-      'whatwg-fetch',
+      'axios',
       'react',
       'react-dom',
       'react-router',

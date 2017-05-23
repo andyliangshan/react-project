@@ -26,7 +26,7 @@ module.exports = merge.smart(baseConfig, {
   module: {
     rules: [
       {
-        test: /\.(?:png|jpe?g|gif|svg)$/,
+        test: /\.(?:woff2?|eot|ttf|svg)$/,
         loaders: [
           {
             loader: 'file-loader',
@@ -49,12 +49,28 @@ module.exports = merge.smart(baseConfig, {
         ]
       },
       {
-        test: /\.(?:png|jpe?g|gif|svg)$/,
-        loader: 'url-loader',
-        options: {
-          limit: 10000,
-          name: 'img/[name]-[hash:10].[ext]'
-        }
+        test: /\.(?:png|jpe?g|gif)$/,
+        loaders: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 10000,
+              name: 'img/[name]-[hash:10].[ext]'
+            }
+          },
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              progressive: true,
+              optimizationLevel: 7,
+              interlaced: false,
+              pngquant: {
+                quality: '65-90',
+                speed: 4
+              }
+            }
+          }
+        ]
       },
       {
         test: /\.css$/,
