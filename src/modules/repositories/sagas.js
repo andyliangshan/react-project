@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { call, takeEvery, put } from 'redux-saga/effects';
 
 import {
@@ -5,9 +6,8 @@ import {
 } from './actions';
 
 function fetchReposApi(name) {
-  return fetch(`/github/api/users/${name}/repos`)
-    .then(response => response.json())
-    .then((repos) => {
+  return axios.get(`/github/api/users/${name}/repos`)
+    .then(({data: repos}) => {
       if (repos.message) {
         throw new Error(repos.message);
       } else {

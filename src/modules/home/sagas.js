@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { call, takeEvery, put } from 'redux-saga/effects';
 
 import {
@@ -5,9 +6,8 @@ import {
 } from './actions';
 
 function fetchIntroApi() {
-  return fetch('/api/hello')
-    .then(response => response.json())
-    .then((ret) => {
+  return axios.get('/api/hello')
+    .then(({data: ret}) => {
       if (ret.status) {
         throw new Error(ret.msg);
       } else {
