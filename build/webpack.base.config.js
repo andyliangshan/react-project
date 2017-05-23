@@ -3,6 +3,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const config = require('./config');
+const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -64,6 +65,7 @@ module.exports = {
     new webpack.optimize.CommonsChunkPlugin({
       names: ['vendor', 'manifest'],
       minChunks: Infinity
-    })
+    }),
+    new FriendlyErrorsPlugin()
   ]
 };
