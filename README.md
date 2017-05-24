@@ -5,7 +5,7 @@ The boilerplate based on [react](https://facebook.github.io/react), [redux](http
 ## Getting Started
 
 ```shell
-# dev (Start the dev server, that contains startup mock server.)
+# dev (Startup the dev server and the mock server.)
 $ npm run dev
 
 # build

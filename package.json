@@ -7,11 +7,11 @@
     "node": ">=4.0.0"
   },
   "scripts": {
-    "lint": "eslint src; exit 0",
-    "dev": "rimraf dist/ && webpack-dev-server --config build/webpack.dev.config.js",
+    "dev": "rimraf dist/ && webpack-dev-server --config build/webpack.dev.config.js & npm run mock",
     "mock": "nodemon --watch mock build/mock-server.js",
     "build": "rimraf dist/ && npm run build:prod",
-    "build:prod": "cross-env NODE_ENV=production webpack --config build/webpack.prod.config.js --progress --hide-modules"
+    "build:prod": "cross-env NODE_ENV=production webpack --config build/webpack.prod.config.js --progress --hide-modules",
+    "lint": "eslint src/; exit 0"
   },
   "repository": {
     "type": "git",
