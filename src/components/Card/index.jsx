@@ -1,5 +1,6 @@
 
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import styles from './style.css';
 
@@ -29,7 +30,7 @@ function Card({
   let content = null;
 
   if (isFetching) {
-    content = <div className={styles.wait}>正在获取用户信息。。。</div>;
+    content = <div className={styles.wait}>正在获取用户信息......</div>;
   } else {
     if (error) {
       content = <div className={styles.error}>{error}</div>;

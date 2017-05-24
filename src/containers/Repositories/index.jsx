@@ -23,7 +23,7 @@ class Repositories extends React.Component {
     if (isFetching) {
       return (
         <tr>
-          <td colSpan="3" className={styles.wait}>正在加载数据。。。</td>
+          <td colSpan="3" className={styles.wait}>正在加载数据......</td>
         </tr>
       );
     }

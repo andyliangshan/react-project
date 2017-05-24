@@ -16,15 +16,15 @@
 
   & td {
     text-align: left;
+  }
 
-    &.wait, &.error {
-      text-align: center;
-      font-size: 12px;
-    }
+  & td.wait, & td.error {
+    text-align: center;
+    font-size: 12px;
+  }
 
-    &.error {
-      color: #f00;
-    }
+  & td.error {
+    color: #f00;
   }
 
   & a {
