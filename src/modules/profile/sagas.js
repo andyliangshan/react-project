@@ -7,7 +7,7 @@ import {
 
 function fetchUserApi(name) {
   return axios.get(`/github/api/users/${name}`)
-    .then(({data: repos}) => {
+    .then(({ data: repos }) => {
       if (repos.message) {
         throw new Error(repos.message);
       } else {

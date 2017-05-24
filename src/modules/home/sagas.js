@@ -7,7 +7,7 @@ import {
 
 function fetchIntroApi() {
   return axios.get('/api/hello')
-    .then(({data: ret}) => {
+    .then(({ data: ret }) => {
       if (ret.status) {
         throw new Error(ret.msg);
       } else {
