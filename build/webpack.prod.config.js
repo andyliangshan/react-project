@@ -98,6 +98,7 @@ module.exports = merge.smart(baseConfig, {
     }),
     extractCSS,
     extractVendorCSS,
+    new webpack.HashedModuleIdsPlugin(),
     new HtmlWebpackPlugin({
       inject: false,
       title: config.title,

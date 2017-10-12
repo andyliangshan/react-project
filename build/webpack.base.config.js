@@ -3,7 +3,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const config = require('./config');
-const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -30,14 +29,12 @@ module.exports = {
   },
   resolve: {
     alias: {
-      'react': 'react/dist/react.min.js',
-      'react-dom': 'react-dom/dist/react-dom.min.js',
       'babel-polyfill': 'babel-polyfill/browser.js'
     },
     extensions: ['.js', '.jsx', '.json'],
     modules: [
-      path.resolve('src'),
-      path.resolve('node_modules')
+      path.resolve('node_modules'),
+      path.resolve('src')
     ]
   },
   module: {
@@ -65,7 +62,6 @@ module.exports = {
     new webpack.optimize.CommonsChunkPlugin({
       names: ['vendor', 'manifest'],
       minChunks: Infinity
-    }),
-    new FriendlyErrorsPlugin()
+    })
   ]
 };

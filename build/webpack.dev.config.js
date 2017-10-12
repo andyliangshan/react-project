@@ -6,6 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const baseConfig = require('./webpack.base.config');
 const config = require('./config');
 const postcssLoader = require('./postcss-loader.config');
+const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 
 module.exports = merge.smartStrategy({
   entry: 'prepend'
@@ -68,6 +69,7 @@ module.exports = merge.smartStrategy({
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
+    new FriendlyErrorsPlugin(),
     new HtmlWebpackPlugin({
       inject: false,
       title: config.title,
