@@ -24,7 +24,6 @@ module.exports = {
   context: path.resolve('src'),
   output: {
     path: path.resolve(config.output),
-    filename: '[name].js',
     publicPath: '/'
   },
   resolve: {

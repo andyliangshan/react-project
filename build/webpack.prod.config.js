@@ -21,7 +21,7 @@ const extractVendorCSS = new ExtractTextPlugin({
 module.exports = merge.smart(baseConfig, {
   output: {
     filename: '[name]-[chunkhash:10].js',
-    chunkFilename: 'chunk.[id]-[chunkhash:10].js'
+    chunkFilename: '[name].chunk-[chunkhash:10].js'
   },
   module: {
     rules: [

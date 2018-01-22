@@ -13,10 +13,15 @@ module.exports = merge.smartStrategy({
 })(baseConfig, {
   entry: {
     main: [
+      'eventsource-polyfill',
       'react-hot-loader/patch',
       'webpack-dev-server/client?http://127.0.0.1:8080',
       'webpack/hot/only-dev-server'
     ]
+  },
+  output: {
+    filename: '[name].js',
+    chunkFilename: '[name].chunk.js'
   },
   devtool: 'cheap-module-inline-source-map',
   devServer: {
@@ -30,7 +35,8 @@ module.exports = merge.smartStrategy({
     hot: true,
     // enable gzip
     compress: true,
-    stats: 'normal',
+    noInfo: true,
+    stats: 'errors-only',
     proxy: config.proxy
   },
   module: {
