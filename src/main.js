@@ -1,7 +1,6 @@
 import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
 import { Router, browserHistory } from 'react-router';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
@@ -27,7 +26,9 @@ function decorateRoute(route) {
   let enter = newRoute.onEnter;
 
   newRoute.onEnter = function (...args) {
-    enter && enter.apply(this, args);
+    if (enter) {
+      enter.apply(this, args);
+    }
     NProgress.start();
   };
 
@@ -35,7 +36,9 @@ function decorateRoute(route) {
     let indexRouteEnter = newRoute.indexRoute.onEnter;
 
     newRoute.indexRoute.onEnter = function (...args) {
-      indexRouteEnter && indexRouteEnter.apply(this, args);
+      if (indexRouteEnter) {
+        indexRouteEnter.apply(this, args);
+      }
       NProgress.start();
     };
   }
