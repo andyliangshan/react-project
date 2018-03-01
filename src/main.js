@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
@@ -25,7 +26,7 @@ function decorateRoute(route) {
 
   let enter = newRoute.onEnter;
 
-  newRoute.onEnter = function(...args) {
+  newRoute.onEnter = function (...args) {
     enter && enter.apply(this, args);
     NProgress.start();
   };
@@ -33,7 +34,7 @@ function decorateRoute(route) {
   if (newRoute.indexRoute && newRoute.indexRoute.component) {
     let indexRouteEnter = newRoute.indexRoute.onEnter;
 
-    newRoute.indexRoute.onEnter = function(...args) {
+    newRoute.indexRoute.onEnter = function (...args) {
       indexRouteEnter && indexRouteEnter.apply(this, args);
       NProgress.start();
     };
@@ -101,7 +102,7 @@ const App = () => (
   <Provider store={store}>
     <Router history={history} routes={applyNProgress(routes)} createElement={createElement} />
   </Provider>
-)
+);
 
 ReactDOM.render(
   <App />,

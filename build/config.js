@@ -3,6 +3,22 @@
 const config = {
   title: 'React boilerplate',
   output: './dist',
+  vendor: {
+    path: './node_modules/__react-vendor-bundle__',
+    modules: [
+      'babel-polyfill',
+      'axios',
+      'react',
+      'react-dom',
+      'react-router',
+      'react-router-redux',
+      'react-redux',
+      'redux',
+      'redux-saga',
+      'redux-actions',
+      'nprogress'
+    ]
+  },
   port: 8091,
   mock: {
     contentBase: './mock',
