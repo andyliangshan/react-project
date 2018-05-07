@@ -11,26 +11,16 @@ module.exports = {
     path: path.resolve(config.vendor.path),
     library: '[name]_dll_[chunkhash:10]'
   },
-  resolve: {
-    alias: {
-      'babel-polyfill': 'babel-polyfill/browser.js'
-    }
-  },
-  module: {
-    noParse: /(?:babel-polyfill|(?:nprogress)$)/
+  mode: 'production',
+  performance: {
+    hints: false
   },
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-      }
-    }),
     new webpack.DllPlugin({
       context: process.cwd(),
       path: path.join(config.vendor.path, '[name].json'),
       name: '[name]_dll_[chunkhash:10]'
     }),
-    new webpack.HashedModuleIdsPlugin(),
-    new webpack.optimize.UglifyJsPlugin(),
+    new webpack.HashedModuleIdsPlugin()
   ]
 };

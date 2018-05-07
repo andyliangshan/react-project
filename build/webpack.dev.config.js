@@ -9,14 +9,14 @@ const postcssLoader = require('./postcss-loader.config');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 
 module.exports = merge.smartStrategy({
-  entry: 'prepend'
+  entry: 'prepend',
+  plugins: 'prepend'
 })(baseConfig, {
   entry: {
     main: [
       'eventsource-polyfill',
       'react-hot-loader/patch',
-      'webpack-dev-server/client?http://127.0.0.1:8080',
-      'webpack/hot/only-dev-server'
+      'webpack-dev-server/client'
     ]
   },
   output: {
@@ -25,18 +25,20 @@ module.exports = merge.smartStrategy({
   },
   devtool: 'cheap-module-inline-source-map',
   devServer: {
+    clientLogLevel: 'warning',
     port: 8080,
-    host: '127.0.0.1',
+    host: '0.0.0.0',
     inline: true,
     historyApiFallback: {
       index: '/'
     },
-    // enable HMR on the server
     hot: true,
-    // enable gzip
     compress: true,
-    noInfo: true,
-    stats: 'errors-only',
+    quiet: true,
+    overlay: { 
+      warnings: false, 
+      errors: true 
+    },
     proxy: config.proxy
   },
   module: {
@@ -51,7 +53,8 @@ module.exports = merge.smartStrategy({
             options: {
               modules: true,
               sourceMap: true,
-              camelCase: true
+              camelCase: true,
+              localIdentName: '[name]__[local]--[hash:base64:5]'
             }
           },
           postcssLoader
@@ -72,9 +75,9 @@ module.exports = merge.smartStrategy({
       }
     ],
   },
+  mode: 'development',
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NamedModulesPlugin(),
     new FriendlyErrorsPlugin(),
     new HtmlWebpackPlugin({
       inject: false,

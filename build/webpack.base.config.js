@@ -43,22 +43,30 @@ module.exports = {
       {
         test: /\.jsx?$/,
         loader: 'babel-loader',
-        exclude: /node_modules/,
         include: path.resolve('src')
       }
     ]
   },
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        common: {
+          test: /node_modules\//,
+          name: 'common',
+          priority: 10,
+          chunks: 'all',
+          enforce: true
+        }
       }
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-      async: true,
-      children: true,
-      minChunks: 2
-    }),
+    },
+    runtimeChunk: {
+      name: 'webpack-runtime'
+    }
+  },
+  performance: {
+    hints: false
+  },
+  plugins: [
     new webpack.DllReferencePlugin({
       context: process.cwd(),
       manifest: vendorManifest

@@ -2,23 +2,15 @@
 
 const webpack = require('webpack');
 const merge = require('webpack-merge');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const baseConfig = require('./webpack.base.config');
 const config = require('./config');
 const postcssLoader = require('./postcss-loader.config');
 
-const extractCSS = new ExtractTextPlugin({
-  filename: 'css/[name]-[contenthash:10].css',
-  allChunks: true
-});
-
-const extractVendorCSS = new ExtractTextPlugin({
-  filename: 'css/vendor-[contenthash:10].css',
-  allChunks: true
-});
-
-module.exports = merge.smart(baseConfig, {
+module.exports = merge.smartStrategy({
+  plugins: 'prepend'
+})(baseConfig, {
   output: {
     filename: '[name]-[chunkhash:10].js',
     chunkFilename: '[name].chunk-[chunkhash:10].js'
@@ -59,45 +51,43 @@ module.exports = merge.smart(baseConfig, {
       {
         test: /\.css$/,
         exclude: /node_modules/,
-        use: extractCSS.extract({
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                modules: true,
-                minimize: true,
-                camelCase: true
-              }
-            },
-            postcssLoader
-          ]
-        })
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              minimize: true,
+              camelCase: true,
+              localIdentName: '[name]__[local]--[hash:base64:5]'
+            }
+          },
+          postcssLoader
+        ]
       },
       {
         test: /\.css$/,
         include: /node_modules/,
-        use: extractVendorCSS.extract({
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                minimize: true
-              }
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              minimize: true
             }
-          ]
-        })
+          }
+        ]
       }
     ]
   },
+  mode: 'production',
   plugins: [
-    new webpack.optimize.UglifyJsPlugin(),
     new webpack.LoaderOptionsPlugin({
       minimize: true
     }),
-    extractCSS,
-    extractVendorCSS,
+    new MiniCssExtractPlugin({
+      filename: 'css/[name]-[contenthash:10].css'
+    }),
     new webpack.HashedModuleIdsPlugin(),
     new HtmlWebpackPlugin({
       inject: false,
