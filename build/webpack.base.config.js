@@ -43,7 +43,10 @@ module.exports = {
       {
         test: /\.jsx?$/,
         loader: 'babel-loader',
-        include: path.resolve('src')
+        include: path.resolve('src'),
+        options: {
+          cacheDirectory: true
+        }
       }
     ]
   },
