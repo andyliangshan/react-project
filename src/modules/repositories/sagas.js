@@ -1,9 +1,7 @@
 import axios from 'axios';
 import { call, takeEvery, put } from 'redux-saga/effects';
 
-import {
-  REQUEST_REPOS, successRepos, failureRepos
-} from './actions';
+import { REQUEST_REPOS, successRepos, failureRepos } from './actions';
 
 function fetchReposApi(name) {
   return axios.get(`/github/api/users/${name}/repos`)

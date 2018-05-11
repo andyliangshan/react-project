@@ -1,9 +1,7 @@
 import axios from 'axios';
 import { call, takeEvery, put } from 'redux-saga/effects';
 
-import {
-  REQUEST_INTRO, successIntro, failureIntro
-} from './actions';
+import { REQUEST_INTRO, successIntro, failureIntro } from './actions';
 
 function fetchIntroApi() {
   return axios.get('/api/hello')

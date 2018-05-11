@@ -1,9 +1,7 @@
 import axios from 'axios';
 import { call, takeEvery, put } from 'redux-saga/effects';
 
-import {
-  REQUEST_USER, successUser, failureUser
-} from './actions';
+import { REQUEST_USER, successUser, failureUser } from './actions';
 
 function fetchUserApi(name) {
   return axios.get(`/github/api/users/${name}`)
