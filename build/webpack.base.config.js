@@ -24,7 +24,7 @@ if (!vendorPath) {
 
 module.exports = {
   entry: {
-    main: ['./main.js']
+    main: ['@babel/polyfill', './main.js']
   },
   context: path.resolve('src'),
   output: {
@@ -49,6 +49,9 @@ module.exports = {
         }
       }
     ]
+  },
+  stats: {
+    entrypoints: false
   },
   optimization: {
     splitChunks: {

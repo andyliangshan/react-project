@@ -1,4 +1,3 @@
-import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, browserHistory } from 'react-router';
@@ -15,6 +14,45 @@ import rootSaga from 'modules/sagas';
 
 import 'nprogress/nprogress.css';
 
+function decorateEnterHook(route) {
+  const originalEnter = route.onEnter;
+
+  if (originalEnter == null) {
+    route.onEnter = function () {
+      NProgress.start();
+    }
+  } else {
+    switch (originalEnter.length) {
+      case 0:
+        route.onEnter = function () {
+          originalEnter.apply(this);
+          NProgress.start();
+        }
+        break;
+      case 1:
+        route.onEnter = function (nextState) {
+          originalEnter.call(this, nextState);
+          NProgress.start();
+        }
+        break;
+      case 2:
+        route.onEnter = function (nextState, replace) {
+          originalEnter.call(this, nextState, replace);
+          NProgress.start();
+        }
+        break;
+      case 3:
+      default:
+        route.onEnter = function (nextState, replace, callback) {
+          originalEnter.call(this, nextState, replace, callback);
+          NProgress.start();
+        }
+    }
+  }
+
+  return route;
+}
+
 /**
  * 装饰路由，添加进度条展示
  * @param {Object} route 旧路由
@@ -23,24 +61,10 @@ import 'nprogress/nprogress.css';
 function decorateRoute(route) {
   let newRoute = { ...route };
 
-  let enter = newRoute.onEnter;
-
-  newRoute.onEnter = function (...args) {
-    if (enter) {
-      enter.apply(this, args);
-    }
-    NProgress.start();
-  };
+  newRoute = decorateEnterHook(newRoute);
 
   if (newRoute.indexRoute && newRoute.indexRoute.component) {
-    let indexRouteEnter = newRoute.indexRoute.onEnter;
-
-    newRoute.indexRoute.onEnter = function (...args) {
-      if (indexRouteEnter) {
-        indexRouteEnter.apply(this, args);
-      }
-      NProgress.start();
-    };
+    newRoute.indexRoute = decorateEnterHook(newRoute.indexRoute);
   }
 
   return newRoute;

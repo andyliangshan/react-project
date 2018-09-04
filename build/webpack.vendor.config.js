@@ -11,7 +11,7 @@ module.exports = {
     path: path.resolve(config.vendor.path),
     library: '[name]_dll_[chunkhash:10]'
   },
-  mode: 'production',
+  mode: process.env.NODE_ENV,
   performance: {
     hints: false
   },

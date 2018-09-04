@@ -6,7 +6,7 @@ const config = {
   vendor: {
     path: './node_modules/__react-vendor-bundle__',
     modules: [
-      'babel-polyfill',
+      '@babel/polyfill',
       'axios',
       'react',
       'react-dom',
