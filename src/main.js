@@ -20,33 +20,33 @@ function decorateEnterHook(route) {
   if (originalEnter == null) {
     route.onEnter = function () {
       NProgress.start();
-    }
+    };
   } else {
     switch (originalEnter.length) {
       case 0:
         route.onEnter = function () {
           originalEnter.apply(this);
           NProgress.start();
-        }
+        };
         break;
       case 1:
         route.onEnter = function (nextState) {
           originalEnter.call(this, nextState);
           NProgress.start();
-        }
+        };
         break;
       case 2:
         route.onEnter = function (nextState, replace) {
           originalEnter.call(this, nextState, replace);
           NProgress.start();
-        }
+        };
         break;
       case 3:
       default:
         route.onEnter = function (nextState, replace, callback) {
           originalEnter.call(this, nextState, replace, callback);
           NProgress.start();
-        }
+        };
     }
   }
 
