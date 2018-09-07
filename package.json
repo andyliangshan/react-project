@@ -4,7 +4,7 @@
   "version": "1.0.0-beta",
   "description": "A react, redux, react-router, webpack boilerplate.",
   "engines": {
-    "node": ">=4.0.0"
+    "node": ">=6.11.5"
   },
   "scripts": {
     "postinstall": "cross-env NODE_ENV=development npm run build:vendor",
