@@ -1,5 +1,6 @@
 'use strict';
 
+const chalk = require('chalk');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -26,7 +27,7 @@ module.exports = merge.smartStrategy({
   devtool: 'cheap-module-inline-source-map',
   devServer: {
     clientLogLevel: 'warning',
-    port: 8080,
+    port: config.port,
     host: '0.0.0.0',
     inline: true,
     historyApiFallback: {
@@ -78,7 +79,11 @@ module.exports = merge.smartStrategy({
   mode: 'development',
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new FriendlyErrorsPlugin(),
+    new FriendlyErrorsPlugin({
+      compilationSuccessInfo: {
+        messages: [`Webpack dev server is running here: ${chalk.cyan(`http://127.0.0.1:${chalk.bold(config.port)}`)}`]
+      }
+    }),
     new HtmlWebpackPlugin({
       inject: false,
       title: config.title,

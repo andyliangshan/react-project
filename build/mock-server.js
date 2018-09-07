@@ -43,5 +43,5 @@ app.listen(port, '0.0.0.0', (err) => {
     return;
   }
 
-  console.log(chalk.green('\nMock server listening at http://localhost:%s.\n'), port);
+  console.log(`\nMock server is running here: ${chalk.cyan(`http://127.0.0.1:${chalk.bold(port)}`)}\n`);
 });
