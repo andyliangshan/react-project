@@ -106,14 +106,17 @@ const sagaMiddleware = createSagaMiddleware();
  */
 let initialState = {};
 
+/* eslint-disable no-underscore-dangle */
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+/* eslint-enable */
+
 /**
  * redux store
  * @type {Object}
  * @see http://redux.js.org/docs/api/createStore.html
  */
-let store = createStore(rootReducer, initialState, compose(
-  applyMiddleware(sagaMiddleware, routerMiddleware(browserHistory)),
-  window.devToolsExtension ? window.devToolsExtension() : fn => fn
+let store = createStore(rootReducer, initialState, composeEnhancers(
+  applyMiddleware(sagaMiddleware, routerMiddleware(browserHistory))
 ));
 
 sagaMiddleware.run(rootSaga);

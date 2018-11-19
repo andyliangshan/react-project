@@ -1,12 +1,37 @@
 'use strict';
 
+const path = require('path');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const imagemin = require('imagemin');
+const mozjpeg = require('imagemin-mozjpeg');
+const optipng = require('imagemin-optipng');
+const gifsicle = require('imagemin-gifsicle');
+const pngquant = require('imagemin-pngquant');
 const baseConfig = require('./webpack.base.config');
 const config = require('./config');
 const postcssLoader = require('./postcss-loader.config');
+
+const imageOptimizeOptions = {
+  mozjpeg: {
+    progressive: true
+  },
+  optipng: {
+    optimizationLevel: 7
+  },
+  gifsicle: {
+    interlaced: false
+  },
+  pngquant: {
+    quality: '65-90',
+    speed: 4
+  }
+};
 
 module.exports = merge.smartStrategy({
   plugins: 'prepend'
@@ -70,18 +95,45 @@ module.exports = merge.smartStrategy({
         include: /node_modules/,
         use: [
           MiniCssExtractPlugin.loader,
-          {
-            loader: 'css-loader',
-            options: {
-              minimize: true
-            }
-          }
+          'css-loader'
         ]
       }
     ]
   },
   mode: 'production',
+  optimization: {
+    sideEffects: false,
+    minimizer: [
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+        sourceMap: false
+      }),
+      new OptimizeCSSAssetsPlugin()
+    ]
+  },
   plugins: [
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, '../static'),
+        to: 'static/',
+        ignore: ['.*'],
+        transform(content, filePath) {
+          if (/\.(?:png|jpe?g|gif)$/.test(filePath)) {
+            return imagemin.buffer(content, {
+              plugins: [
+                mozjpeg(imageOptimizeOptions.mozjpeg),
+                optipng(imageOptimizeOptions.optipng),
+                gifsicle(imageOptimizeOptions.gifsicle),
+                pngquant(imageOptimizeOptions.pngquant)
+              ]
+            });
+          }
+
+          return content;
+        }
+      }
+    ]),
     new webpack.LoaderOptionsPlugin({
       minimize: true
     }),

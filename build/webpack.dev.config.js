@@ -1,13 +1,15 @@
 'use strict';
 
+const path = require('path');
 const chalk = require('chalk');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 const baseConfig = require('./webpack.base.config');
 const config = require('./config');
 const postcssLoader = require('./postcss-loader.config');
-const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 
 module.exports = merge.smartStrategy({
   entry: 'prepend',
@@ -45,6 +47,13 @@ module.exports = merge.smartStrategy({
   module: {
     rules: [
       {
+        test: /\.(?:woff2?|eot|ttf|svg)$/,
+        loader: 'file-loader',
+        options: {
+          name: 'fonts/[name].[ext]'
+        }
+      },
+      {
         test: /\.css$/,
         exclude: /node_modules/,
         use: [
@@ -78,6 +87,13 @@ module.exports = merge.smartStrategy({
   },
   mode: 'development',
   plugins: [
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, '../static'),
+        to: 'static/',
+        ignore: ['.*']
+      }
+    ]),
     new webpack.HotModuleReplacementPlugin(),
     new FriendlyErrorsPlugin({
       compilationSuccessInfo: {
