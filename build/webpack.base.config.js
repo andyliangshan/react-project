@@ -60,6 +60,7 @@ module.exports = {
           test: /node_modules\//,
           name: 'common',
           priority: 10,
+          minChunks: 2,
           chunks: 'all',
           enforce: true
         }
