@@ -1,11 +1,11 @@
-'use strict';
+
 
 const path = require('path');
 const fs = require('fs');
 const chalk = require('chalk');
 const webpack = require('webpack');
-const config = require('./config');
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
+const config = require('./config');
 
 const vendorManifestPath = path.resolve(config.vendor.path, 'vendor.json');
 
@@ -15,7 +15,7 @@ if (!fs.existsSync(vendorManifestPath)) {
 }
 
 const vendorManifest = require(vendorManifestPath);
-const vendorPath = path.resolve(config.vendor.path, vendorManifest.name + '.js');
+const vendorPath = path.resolve(config.vendor.path, `${vendorManifest.name}.js`);
 
 if (!vendorPath) {
   console.error(chalk.red('[Webpack] The vendor file is missing. Please run `npm run build:vendor`\n'));
@@ -33,10 +33,9 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.jsx', '.json'],
-    modules: [
-      path.resolve('node_modules'),
-      path.resolve('src')
-    ]
+    alias: {
+      '@': path.resolve('src')
+    }
   },
   module: {
     rules: [

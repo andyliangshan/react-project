@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+const WebpackBar = require('webpackbar');
 const config = require('./config');
 
 module.exports = {
@@ -16,6 +17,7 @@ module.exports = {
     hints: false
   },
   plugins: [
+    new WebpackBar(),
     new webpack.DllPlugin({
       context: process.cwd(),
       path: path.join(config.vendor.path, '[name].json'),

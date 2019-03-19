@@ -1,20 +1,13 @@
-import axios from 'axios';
+import axios from '@/shared/axios';
 import { call, takeEvery, put } from 'redux-saga/effects';
 
 import { REQUEST_USER, successUser, failureUser } from './actions';
 
 function fetchUserApi(name) {
-  return axios.get(`/github/api/users/${name}`)
-    .then(({ data: repos }) => {
-      if (repos.message) {
-        throw new Error(repos.message);
-      } else {
-        return repos;
-      }
-    });
+  return axios.get(`/github/api/users/${name}`);
 }
 
-function* fetchUser({ payload: name }) {
+function* fetchUser({ payload: name, __promise__ }) {
   try {
     const user = yield call(fetchUserApi, name);
 
@@ -27,11 +20,13 @@ function* fetchUser({ payload: name }) {
       github: user.html_url,
       createdAt: user.created_at
     }));
+    __promise__.resolve();
   } catch (err) {
     yield put(failureUser(err));
+    __promise__.reject();
   }
 }
 
-export default function* () {
+export default function* watchActions() {
   yield takeEvery(REQUEST_USER, fetchUser);
 }

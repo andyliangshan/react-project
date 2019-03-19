@@ -1,4 +1,4 @@
-'use strict';
+
 
 const path = require('path');
 const webpack = require('webpack');
@@ -6,8 +6,9 @@ const merge = require('webpack-merge');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const WebpackBar = require('webpackbar');
 const imagemin = require('imagemin');
 const mozjpeg = require('imagemin-mozjpeg');
 const optipng = require('imagemin-optipng');
@@ -61,15 +62,7 @@ module.exports = merge.smartStrategy({
           },
           {
             loader: 'image-webpack-loader',
-            options: {
-              progressive: true,
-              optimizationLevel: 7,
-              interlaced: false,
-              pngquant: {
-                quality: '65-90',
-                speed: 4
-              }
-            }
+            options: imageOptimizeOptions
           }
         ]
       },
@@ -113,10 +106,11 @@ module.exports = merge.smartStrategy({
     ]
   },
   plugins: [
+    new WebpackBar(),
     new CopyWebpackPlugin([
       {
-        from: path.resolve(__dirname, '../static'),
-        to: 'static/',
+        from: path.resolve(__dirname, '../public'),
+        to: 'public/',
         ignore: ['.*'],
         transform(content, filePath) {
           if (/\.(?:png|jpe?g|gif)$/.test(filePath)) {

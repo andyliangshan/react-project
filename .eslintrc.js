@@ -31,6 +31,7 @@ module.exports = {
     browser: true,
     es6: true,
     worker: true,
-    serviceworker: true
+    serviceworker: true,
+    jest: true
   }
 }

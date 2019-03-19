@@ -1,4 +1,4 @@
-'use strict';
+
 
 const path = require('path');
 const chalk = require('chalk');
@@ -38,9 +38,9 @@ module.exports = merge.smartStrategy({
     hot: true,
     compress: true,
     quiet: true,
-    overlay: { 
-      warnings: false, 
-      errors: true 
+    overlay: {
+      warnings: false,
+      errors: true
     },
     proxy: config.proxy
   },
@@ -89,8 +89,8 @@ module.exports = merge.smartStrategy({
   plugins: [
     new CopyWebpackPlugin([
       {
-        from: path.resolve(__dirname, '../static'),
-        to: 'static/',
+        from: path.resolve(__dirname, '../public'),
+        to: 'public/',
         ignore: ['.*']
       }
     ]),

@@ -10,9 +10,9 @@ function formatDate(date) {
     date = new Date(date);
   }
 
-  let year = date.getFullYear(),
-    month = ('0' + (date.getMonth() + 1)).slice(-2),
-    day = ('0' + date.getDate()).slice(-2);
+  let year = date.getFullYear();
+  let month = (`0${date.getMonth() + 1}`).slice(-2);
+  let day = (`0${date.getDate()}`).slice(-2);
 
   return `${year}-${month}-${day}`;
 }
@@ -31,24 +31,33 @@ function Card({
 
   if (isFetching) {
     content = <div className={styles.wait}>正在获取用户信息......</div>;
+  } else if (error) {
+    content = <div className={styles.error}>{error}</div>;
   } else {
-    if (error) {
-      content = <div className={styles.error}>{error}</div>;
-    } else {
-      content = <div>
+    content = (
+      <div>
         <h2>{name}</h2>
         <dl className={styles.info}>
           <dt className={styles.avatar}>
             <a href={github}>
-              <img src={avatar} />
+              <img src={avatar} alt="" />
             </a>
           </dt>
-          <dd>location: {location}</dd>
-          <dd>email: <a href={`mailto:${email}`}>{email}</a></dd>
-          <dd>date created: {formatDate(createdAt)}</dd>
+          <dd>
+            <span>location: </span>
+            {location}
+          </dd>
+          <dd>
+            <span>email: </span>
+            <a href={`mailto:${email}`}>{email}</a>
+          </dd>
+          <dd>
+            <span>date created: </span>
+            {formatDate(createdAt)}
+          </dd>
         </dl>
-      </div>;
-    }
+      </div>
+    );
   }
 
   return (
@@ -60,6 +69,11 @@ function Card({
 
 Card.defaultProps = {
   error: '',
+  email: '',
+  github: '',
+  avatar: '',
+  location: '',
+  createdAt: '',
   isFetching: false
 };
 

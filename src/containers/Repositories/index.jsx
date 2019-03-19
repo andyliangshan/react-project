@@ -5,12 +5,13 @@ import { connect } from 'react-redux';
 
 import {
   requestRepos
-} from 'modules/repositories/actions';
+} from '@/modules/repositories/actions';
 
 import styles from './style.css';
 
-class Repositories extends React.Component {
+/* eslint-disable react/prop-types */
 
+class Repositories extends React.Component {
   componentDidMount() {
     let { actions } = this.props;
 
@@ -36,15 +37,16 @@ class Repositories extends React.Component {
       );
     }
 
-    return repos.map(repo => <tr key={repo.id}>
-      <td><a href={repo.url}>{repo.name}</a></td>
-      <td>{repo.lang}</td>
-      <td>{repo.desc}</td>
-    </tr>);
+    return repos.map(repo => (
+      <tr key={repo.id}>
+        <td><a href={repo.url}>{repo.name}</a></td>
+        <td>{repo.lang}</td>
+        <td>{repo.desc}</td>
+      </tr>
+    ));
   }
 
   render() {
-
     return (
       <section>
         <h1>Repositories</h1>
@@ -65,22 +67,12 @@ class Repositories extends React.Component {
   }
 }
 
-function select(state) {
-  let repos = state.repos;
-
-  return {
-    repos: repos.list,
-    isFetching: repos.isFetching,
-    error: repos.error
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators({
-      requestRepos
-    }, dispatch)
-  }
-}
-
-export default connect(select, mapDispatchToProps)(Repositories);
+export default connect(({ repos }) => ({
+  repos: repos.list,
+  isFetching: repos.isFetching,
+  error: repos.error
+}), dispatch => ({
+  actions: bindActionCreators({
+    requestRepos
+  }, dispatch)
+}))(Repositories);

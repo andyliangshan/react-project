@@ -1,4 +1,4 @@
-import { handleActions } from 'redux-actions';
+import { handleActions } from '@/shared/redux-helpers';
 
 import {
   REQUEST_REPOS,

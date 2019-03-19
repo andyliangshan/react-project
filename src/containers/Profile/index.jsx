@@ -3,14 +3,15 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import Card from 'components/Card';
+import Card from '@/components/Card';
 
 import {
   requestUser
-} from 'modules/profile/actions';
+} from '@/modules/profile/actions';
+
+/* eslint-disable react/prop-types */
 
 class Profile extends React.Component {
-
   componentDidMount() {
     let { actions } = this.props;
 
@@ -27,28 +28,18 @@ class Profile extends React.Component {
   }
 }
 
-function select(state) {
-  let profile = state.profile;
-
-  return {
-    name: profile.name,
-    uid: profile.id,
-    email: profile.email,
-    github: profile.github,
-    avatar: profile.avatar,
-    createdAt: profile.createdAt,
-    location: profile.location,
-    isFetching: profile.isFetching,
-    error: profile.error
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators({
-      requestUser
-    }, dispatch)
-  }
-}
-
-export default connect(select, mapDispatchToProps)(Profile);
+export default connect(({ profile }) => ({
+  name: profile.name,
+  uid: profile.id,
+  email: profile.email,
+  github: profile.github,
+  avatar: profile.avatar,
+  createdAt: profile.createdAt,
+  location: profile.location,
+  isFetching: profile.isFetching,
+  error: profile.error
+}), dispatch => ({
+  actions: bindActionCreators({
+    requestUser
+  }, dispatch)
+}))(Profile);

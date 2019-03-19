@@ -1,29 +1,26 @@
 /* eslint no-console: 0 */
 
-'use strict';
 
 const express = require('express');
 const chalk = require('chalk');
 const path = require('path');
 const requireDir = require('require-dir');
-const config = require('./config').mock;
+const _ = require('lodash');
+const config = require('./config');
 
 const app = express();
 const router = express.Router();
 
-const port = config.port;
-const toString = Object.prototype.toString;
+const PORT = config.mockPort;
+const MOCK_DIRECTORY = './mock';
 
-(function resolveRouteModules(routeModules, directory) {
-  Object.keys(routeModules).forEach((name) => {
-    let route = routeModules[name];
+(function invokeRoute(routes, directory) {
+  Object.keys(routes).forEach((name) => {
+    const route = routes[name];
 
-    if (
-      toString.call(route) === '[object Object]'
-      && Object.keys(route).length > 0
-    ) {
-      resolveRouteModules(route, path.join(directory, name));
-    } else if (toString.call(route) === '[object Function]') {
+    if (_.isPlainObject(route) && Object.keys(route).length > 0) {
+      invokeRoute(route, path.join(directory, name));
+    } else if (_.isFunction(route)) {
       route(router);
     } else {
       console.error(
@@ -33,15 +30,15 @@ const toString = Object.prototype.toString;
       );
     }
   });
-}(requireDir(path.resolve(config.contentBase), { recurse: true }), config.contentBase));
+}(requireDir(path.resolve(MOCK_DIRECTORY), { recurse: true }), MOCK_DIRECTORY));
 
 app.use(router);
 
-app.listen(port, '0.0.0.0', (err) => {
+app.listen(PORT, '0.0.0.0', (err) => {
   if (err) {
     console.error(chalk.red(err));
     return;
   }
 
-  console.log(`\nMock server is running here: ${chalk.cyan(`http://127.0.0.1:${chalk.bold(port)}`)}\n`);
+  console.log(`Mock server is running here: ${chalk.cyan(`http://127.0.0.1:${chalk.bold(PORT)}`)}\n`);
 });

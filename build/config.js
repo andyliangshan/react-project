@@ -1,48 +1,28 @@
-'use strict';
 
-const config = {
-  title: 'React boilerplate',
-  output: './dist',
-  vendor: {
-    path: './node_modules/__react-vendor-bundle__',
-    modules: [
-      '@babel/polyfill',
-      'axios',
-      'react',
-      'react-dom',
-      'react-router',
-      'react-router-redux',
-      'react-redux',
-      'redux',
-      'redux-saga',
-      'redux-actions',
-      'nprogress'
-    ]
-  },
-  port: 8091,
-  mock: {
-    contentBase: './mock',
-    port: 8092
-  }
+const fs = require('fs');
+const path = require('path');
+const minimist = require('minimist');
+const chalk = require('chalk');
+const tildify = require('tildify');
+const _ = require('lodash');
+const config = require('./config.default');
+
+const argv = minimist(process.argv.slice(2));
+const custom = {
+  file: argv.buildfile,
+  config: null
 };
 
-/**
- * http proxy options
- * @see https://github.com/chimurai/http-proxy-middleware#options
- */
-config.proxy = {
-  // 以/api开头的请求代理到数据模拟服务
-  '/api/*': {
-    target: `http://localhost:${config.mock.port}/`,
-    secure: false
-  },
-  '/github/api/*': {
-    target: 'https://api.github.com',
-    changeOrigin: true,
-    pathRewrite: {
-      '^/github/api': ''
-    }
-  }
-};
+if (custom.file == null) {
+  custom.file = path.join(process.cwd(), 'build.config.js');
+} else if (!path.isAbsolute(custom.file)) {
+  custom.file = path.join(process.cwd(), custom.file);
+}
+
+if (fs.existsSync(custom.file)) {
+  custom.config = require(custom.file);
+
+  _.merge(config, custom.config || {});
+}
 
 module.exports = config;
