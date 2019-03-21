@@ -23,10 +23,14 @@ export function createActionTypes(types, ns = '') {
   if (!ns) return types;
 
   return Object.keys(types).reduce((newTypes, key) => {
-    newTypes[key] = `${ns}${SEPARATOR}${types[key]}`;
+    if (isPlainObject(types[key])) {
+      newTypes[key] = createActionTypes(types[key], `${ns}${SEPARATOR}${key}`);
+    } else {
+      newTypes[key] = `${ns}${SEPARATOR}${types[key]}`;
+    }
 
     return newTypes;
-  });
+  }, {});
 }
 
 /**

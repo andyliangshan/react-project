@@ -29,6 +29,18 @@ test('createActionTypes: create action types with a namespace', () => {
   }, 'USER')).toEqual({ ADD: 'USER/ADD' });
 });
 
+test('createActionTypes: create nested action types', () => {
+  expect(createActionTypes({
+    LIST: {
+      ADD: 'ADD'
+    }
+  }, 'GLOBAL')).toEqual({
+    LIST: {
+      ADD: 'GLOBAL/LIST/ADD'
+    }
+  });
+});
+
 test('createAsyncAction: create an asynchronous action', () => {
   expect(createAsyncAction('NOOP')(42)).toEqual(attachAsyncMeta(
     createAction('NOOP')(42)
