@@ -1,14 +1,11 @@
-
-
 const path = require('path');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const WebpackBar = require('webpackbar');
 const imagemin = require('imagemin');
 const mozjpeg = require('imagemin-mozjpeg');
 const optipng = require('imagemin-optipng');
@@ -95,18 +92,15 @@ module.exports = merge.smartStrategy({
   },
   mode: 'production',
   optimization: {
-    sideEffects: false,
     minimizer: [
-      new UglifyJsPlugin({
+      new TerserPlugin({
         cache: true,
-        parallel: true,
-        sourceMap: false
+        parallel: true
       }),
       new OptimizeCSSAssetsPlugin()
     ]
   },
   plugins: [
-    new WebpackBar(),
     new CopyWebpackPlugin([
       {
         from: path.resolve(__dirname, '../public'),

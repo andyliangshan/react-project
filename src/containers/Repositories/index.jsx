@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import {
   requestRepos
-} from '@/modules/repositories/actions';
+} from '@/store/modules/repositories/actions';
 
 import styles from './style.css';
 
@@ -13,13 +13,13 @@ import styles from './style.css';
 
 class Repositories extends React.Component {
   componentDidMount() {
-    let { actions } = this.props;
+    const { actions } = this.props;
 
     actions.requestRepos('evan2x');
   }
 
   renderTable() {
-    let { repos, isFetching, error } = this.props;
+    const { repos, isFetching, error } = this.props;
 
     if (isFetching) {
       return (

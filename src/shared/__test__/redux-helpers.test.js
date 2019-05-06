@@ -21,24 +21,20 @@ test('createActionTypes: create action types without a namespace', () => {
   expect(createActionTypes({
     ADD: 'ADD'
   })).toEqual({ ADD: 'ADD' });
+
+  expect(createActionTypes([
+    'ADD'
+  ])).toEqual({ ADD: 'ADD' });
 });
 
 test('createActionTypes: create action types with a namespace', () => {
   expect(createActionTypes({
     ADD: 'ADD'
   }, 'USER')).toEqual({ ADD: 'USER/ADD' });
-});
 
-test('createActionTypes: create nested action types', () => {
-  expect(createActionTypes({
-    LIST: {
-      ADD: 'ADD'
-    }
-  }, 'GLOBAL')).toEqual({
-    LIST: {
-      ADD: 'GLOBAL/LIST/ADD'
-    }
-  });
+  expect(createActionTypes([
+    'ADD'
+  ], 'USER')).toEqual({ ADD: 'USER/ADD' });
 });
 
 test('createAsyncAction: create an asynchronous action', () => {

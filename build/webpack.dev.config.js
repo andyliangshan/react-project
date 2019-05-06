@@ -1,5 +1,3 @@
-
-
 const path = require('path');
 const chalk = require('chalk');
 const webpack = require('webpack');
@@ -18,7 +16,6 @@ module.exports = merge.smartStrategy({
   entry: {
     main: [
       'eventsource-polyfill',
-      'react-hot-loader/patch',
       'webpack-dev-server/client'
     ]
   },
@@ -96,6 +93,7 @@ module.exports = merge.smartStrategy({
     ]),
     new webpack.HotModuleReplacementPlugin(),
     new FriendlyErrorsPlugin({
+      clearConsole: false,
       compilationSuccessInfo: {
         messages: [`Webpack dev server is running here: ${chalk.cyan(`http://127.0.0.1:${chalk.bold(config.port)}`)}`]
       }

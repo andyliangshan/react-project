@@ -11,25 +11,28 @@ export const ASYNC_ACTION = Symbol('@@async/action');
 
 /**
  * create a actionTypes
- * @param {Object} types a plain object
- * @param {String} ns namespace
+ * @param {Object} types a plain object or array
+ * @param {String} namespace namespace
  * @example
  *  createActionTypes({
  *    ADD: 'ADD',
  *    REMOVE: 'REMOVE'
  *  }, 'BAZ')
  */
-export function createActionTypes(types, ns = '') {
-  if (!ns) return types;
+export function createActionTypes(typeMap, namespace = '') {
+  let ns = '';
 
-  return Object.keys(types).reduce((newTypes, key) => {
-    if (isPlainObject(types[key])) {
-      newTypes[key] = createActionTypes(types[key], `${ns}${SEPARATOR}${key}`);
-    } else {
-      newTypes[key] = `${ns}${SEPARATOR}${types[key]}`;
-    }
+  if (namespace) {
+    ns = `${namespace}${SEPARATOR}`;
+  }
 
-    return newTypes;
+  if (Array.isArray(typeMap)) {
+    return typeMap.reduce((acc, type) => (acc[type] = `${ns}${type}`, acc), {});
+  }
+
+  return Object.keys(typeMap).reduce((acc, key) => {
+    acc[key] = `${ns}${typeMap[key]}`;
+    return acc;
   }, {});
 }
 

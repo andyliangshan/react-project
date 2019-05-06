@@ -7,14 +7,13 @@ import Card from '@/components/Card';
 
 import {
   requestUser
-} from '@/modules/profile/actions';
+} from '@/store/modules/profile/actions';
 
 /* eslint-disable react/prop-types */
 
 class Profile extends React.Component {
   componentDidMount() {
-    let { actions } = this.props;
-
+    const { actions } = this.props;
     actions.requestUser('evan2x');
   }
 

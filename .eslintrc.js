@@ -1,4 +1,3 @@
-
 const OFF = 0;
 const WARN = 1;
 const ERROR = 2;
@@ -21,10 +20,15 @@ module.exports = {
     'no-param-reassign': OFF,
     'no-return-assign': OFF,
     'comma-dangle': [ERROR, 'only-multiline'],
+    'no-sequences': OFF,
     'import/no-extraneous-dependencies': OFF,
     'import/extensions': OFF,
     'import/no-unresolved': OFF,
-    'react/jsx-filename-extension': OFF
+    'import/prefer-default-export': OFF,
+    'react/jsx-one-expression-per-line': OFF,
+    'react/jsx-filename-extension': [WARN, { extensions: ['.jsx'] }],
+    'react/prop-types': OFF,
+    'react/forbid-prop-types': OFF
   },
   env: {
     node: true,

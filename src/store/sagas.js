@@ -1,8 +1,8 @@
 import { fork } from 'redux-saga/effects';
 
-import home from './home/sagas';
-import repositories from './repositories/sagas';
-import profile from './profile/sagas';
+import home from './modules/home/sagas';
+import repositories from './modules/repositories/sagas';
+import profile from './modules/profile/sagas';
 
 export default function* root() {
   yield fork(home);

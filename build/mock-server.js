@@ -1,9 +1,9 @@
 /* eslint no-console: 0 */
 
-
 const express = require('express');
 const chalk = require('chalk');
 const path = require('path');
+const bodyParser = require('body-parser');
 const requireDir = require('require-dir');
 const _ = require('lodash');
 const config = require('./config');
@@ -32,6 +32,8 @@ const MOCK_DIRECTORY = './mock';
   });
 }(requireDir(path.resolve(MOCK_DIRECTORY), { recurse: true }), MOCK_DIRECTORY));
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(router);
 
 app.listen(PORT, '0.0.0.0', (err) => {

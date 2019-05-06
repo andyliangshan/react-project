@@ -6,11 +6,11 @@ import { connect } from 'react-redux';
 
 import {
   requestIntro
-} from '@/modules/home/actions';
+} from '@/store/modules/home/actions';
 
 class Home extends React.Component {
   componentDidMount() {
-    let { actions } = this.props;
+    const { actions } = this.props;
 
     actions.requestIntro().then(() => {
       // console.log('successed!');

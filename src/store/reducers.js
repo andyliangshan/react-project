@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 
-import homeReducer from './home/reducers';
-import profileReduer from './profile/reducers';
-import reposReducer from './repositories/reducers';
+import homeReducer from './modules/home/reducers';
+import profileReduer from './modules/profile/reducers';
+import reposReducer from './modules/repositories/reducers';
 
 const rootReducer = combineReducers({
   home: homeReducer,

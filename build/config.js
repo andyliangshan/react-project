@@ -1,9 +1,6 @@
-
 const fs = require('fs');
 const path = require('path');
 const minimist = require('minimist');
-const chalk = require('chalk');
-const tildify = require('tildify');
 const _ = require('lodash');
 const config = require('./config.default');
 

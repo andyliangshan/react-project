@@ -1,12 +1,12 @@
-
-
 const path = require('path');
 const fs = require('fs');
 const chalk = require('chalk');
 const webpack = require('webpack');
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
-const config = require('./config');
+const WebpackBar = require('webpackbar');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
+const config = require('./config');
 const vendorManifestPath = path.resolve(config.vendor.path, 'vendor.json');
 
 if (!fs.existsSync(vendorManifestPath)) {
@@ -41,8 +41,8 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
-        loader: 'babel-loader',
         include: path.resolve('src'),
+        loader: 'babel-loader',
         options: {
           cacheDirectory: true
         }
@@ -50,7 +50,8 @@ module.exports = {
     ]
   },
   stats: {
-    entrypoints: false
+    entrypoints: false,
+    warningsFilter: 'Conflicting order between:'
   },
   optimization: {
     splitChunks: {
@@ -59,7 +60,6 @@ module.exports = {
           test: /node_modules\//,
           name: 'common',
           priority: 10,
-          minChunks: 2,
           chunks: 'all',
           enforce: true
         }
@@ -73,6 +73,15 @@ module.exports = {
     hints: false
   },
   plugins: [
+    new WebpackBar(),
+    // ignoring Moment Locales
+    new webpack.IgnorePlugin({
+      resourceRegExp: /^\.\/locale$/,
+      contextRegExp: /moment$/
+    }),
+    new webpack.EnvironmentPlugin({
+      TITLE: config.title
+    }),
     new webpack.DllReferencePlugin({
       context: process.cwd(),
       manifest: vendorManifest
@@ -81,5 +90,5 @@ module.exports = {
       filepath: vendorPath,
       includeSourcemap: false
     })
-  ]
+  ].concat(process.env.ANALYZER === 'true' ? [new BundleAnalyzerPlugin()] : [])
 };

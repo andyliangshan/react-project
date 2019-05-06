@@ -1,5 +1,4 @@
-
-
+const path = require('path');
 const atImport = require('postcss-import');
 const nested = require('postcss-nested');
 const presetEnv = require('postcss-preset-env');
@@ -9,9 +8,12 @@ module.exports = {
   options: {
     plugins() {
       return [
-        atImport(),
+        atImport({
+          path: path.join(process.cwd(), 'src')
+        }),
         nested(),
         presetEnv({
+          preserve: false,
           features: {
             'nesting-rules': true,
             'color-mod-function': true
