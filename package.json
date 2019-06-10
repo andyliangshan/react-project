@@ -104,7 +104,7 @@
     "@babel/polyfill": "^7.4.4",
     "@babel/runtime": "^7.4.4",
     "@loadable/component": "^5.9.0",
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "lodash": "^4.17.11",
     "nprogress": "^0.2.0",
     "prop-types": "^15.6.2",
