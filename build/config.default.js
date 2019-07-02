@@ -8,7 +8,7 @@ module.exports = {
     path: './node_modules/__react-vendor-bundle__',
     // 打包到dll文件中，按需加载的模块不要写在这里
     modules: [
-      '@babel/polyfill',
+      'core-js/stable',
       '@loadable/component',
       'axios',
       'react',

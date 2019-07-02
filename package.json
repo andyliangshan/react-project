@@ -50,6 +50,7 @@
     "@babel/plugin-proposal-throw-expressions": "^7.2.0",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/plugin-syntax-import-meta": "^7.2.0",
+    "@babel/plugin-transform-react-jsx-source": "^7.2.0",
     "@babel/plugin-transform-runtime": "^7.4.4",
     "@babel/preset-env": "^7.4.4",
     "@babel/preset-react": "^7.0.0",
@@ -101,10 +102,9 @@
     "webpack-bundle-analyzer": "^3.3.2"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.4.4",
-    "@babel/runtime": "^7.4.4",
     "@loadable/component": "^5.9.0",
     "axios": "^0.18.1",
+    "core-js": "^3.1.4",
     "lodash": "^4.17.11",
     "nprogress": "^0.2.0",
     "prop-types": "^15.6.2",

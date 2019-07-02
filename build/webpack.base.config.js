@@ -24,7 +24,7 @@ if (!vendorPath) {
 
 module.exports = {
   entry: {
-    main: ['@babel/polyfill', './main.js']
+    main: ['core-js/stable', './main.js']
   },
   context: path.resolve('src'),
   output: {

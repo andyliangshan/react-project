@@ -24,12 +24,8 @@ module.exports = (api) => {
       '@babel/plugin-proposal-export-namespace-from',
       '@babel/plugin-proposal-numeric-separator',
       '@babel/plugin-proposal-throw-expressions',
-      ['@babel/plugin-transform-runtime', {
-        corejs: false,
-        helpers: true,
-        regenerator: false,
-        useESModules: false
-      }],
+      '@babel/plugin-transform-runtime',
+      "@babel/plugin-transform-react-jsx-source",
       'lodash',
       'react-hot-loader/babel'
     ]

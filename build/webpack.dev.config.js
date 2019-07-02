@@ -28,6 +28,7 @@ module.exports = merge.smartStrategy({
     clientLogLevel: 'warning',
     port: config.port,
     host: '0.0.0.0',
+    disableHostCheck: true,
     inline: true,
     historyApiFallback: {
       index: '/'

@@ -18,7 +18,7 @@ module.exports = {
             'nesting-rules': true,
             'color-mod-function': true
           },
-          browsers: [
+          browserslist: [
             'last 3 versions',
             '> 1% in CN',
             'Firefox ESR',
