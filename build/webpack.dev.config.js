@@ -14,10 +14,7 @@ module.exports = merge.smartStrategy({
   plugins: 'prepend'
 })(baseConfig, {
   entry: {
-    main: [
-      'eventsource-polyfill',
-      'webpack-dev-server/client'
-    ]
+    main: ['event-source-polyfill']
   },
   output: {
     filename: '[name].js',

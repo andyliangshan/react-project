@@ -1,3 +1,4 @@
+import produce from 'immer';
 import { handleActions } from '@/shared/redux-helpers';
 
 import {
@@ -7,19 +8,16 @@ import {
 } from './actions';
 
 const reposReducer = handleActions({
-  [REQUEST_REPOS]: state => ({
-    ...state,
-    isFetching: true
+  [REQUEST_REPOS]: produce((draft) => {
+    draft.isFetching = true;
   }),
-  [SUCCESS_REPOS]: (state, { payload: repos }) => ({
-    ...state,
-    list: repos,
-    isFetching: false
+  [SUCCESS_REPOS]: produce((draft, { payload: repos }) => {
+    draft.list = repos;
+    draft.isFetching = false;
   }),
-  [FAILURE_REPOS]: (state, { payload: error }) => ({
-    ...state,
-    error: error.message,
-    isFetching: false
+  [FAILURE_REPOS]: produce((draft, { payload: error }) => {
+    draft.error = error.message;
+    draft.isFetching = false;
   })
 }, {
   isFetching: false,

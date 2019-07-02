@@ -1,3 +1,4 @@
+import produce from 'immer';
 import { handleActions } from '@/shared/redux-helpers';
 
 import {
@@ -7,19 +8,17 @@ import {
 } from './actions';
 
 const userReducer = handleActions({
-  [REQUEST_USER]: state => ({
-    ...state,
-    isFetching: true
+  [REQUEST_USER]: produce((draft) => {
+    draft.isFetching = true;
   }),
   [SUCCESS_USER]: (state, { payload: user }) => ({
     ...state,
     ...user,
     isFetching: false
   }),
-  [FAILURE_USER]: (state, { payload: error }) => ({
-    ...state,
-    error: error.message,
-    isFetching: false
+  [FAILURE_USER]: produce((draft, { payload: error }) => {
+    draft.error = error.message;
+    draft.isFetching = false;
   })
 }, {
   isFetching: false,

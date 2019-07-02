@@ -1,3 +1,4 @@
+import produce from 'immer';
 import { handleActions } from '@/shared/redux-helpers';
 
 import {
@@ -6,17 +7,16 @@ import {
 } from './actions';
 
 const introReducer = handleActions({
-  [REQUEST_INTRO]: state => ({
-    ...state,
-    isFetching: true
+  [REQUEST_INTRO]: produce((draft) => {
+    draft.isFetching = true;
   }),
-  [SUCCESS_INTRO]: (state, { payload: intro }) => ({
-    ...state,
-    content: intro,
-    isFetching: false
+  [SUCCESS_INTRO]: produce((state, { payload: intro }) => {
+    state.content = intro;
+    state.isFetching = false;
   })
 }, {
-  content: ''
+  content: '',
+  isFetching: false
 });
 
 export default introReducer;
