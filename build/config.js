@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const minimist = require('minimist');
 const _ = require('lodash');
-const config = require('./config.default');
+let config = require('./config.default');
 
 const argv = minimist(process.argv.slice(2));
 const custom = {
@@ -19,7 +19,11 @@ if (custom.file == null) {
 if (fs.existsSync(custom.file)) {
   custom.config = require(custom.file);
 
-  _.merge(config, custom.config || {});
+  config = _.mergeWith(config, custom.config || {}, (objValue, srcValue) => {
+    if (Array.isArray(objValue)) {
+      return Array.from(new Set(objValue.concat(srcValue)));
+    }
+  });
 }
 
 module.exports = config;
